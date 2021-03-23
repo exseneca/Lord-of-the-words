@@ -1,0 +1,90 @@
+X GUI bugs. We need to make sure the tiles can be put back on the rack. We need to have a lockable state.
+X This should be easy. We can lock things 
+
+- have the drop change the backend model - need to learn how to link javascript to python. -     
+
+- we need to be able to play. We need a submit word button. 
+- We also need to check if its legal to place tiles. 
+- The logic for this will be. first go you can place tiles in the middle.
+- From then on you can place tiles coming on.
+
+- We need backend check for 'legal move'
+- we have a states and then a lsit of moves that we want to add. Check if it's legal.
+- Then build all the words that we have made. so run along all sides.
+- Then check the dictionary for every word. Hopefully we can download a dictionary, 
+and load it into memory. We should create an efficient data structure to hold it. TRY!
+- Then calculate points for each word. If there are new bonus tiles we have to take them into 
+account. Then add score to total. 
+
+- Hide reveal tiles when it's not your go!
+- Then finally we will make login. We create a game. - Up to four people can join the game. 
+- Each player sees their tiles, the board and also the score.. 
+- We can then store the history of the games you've played 
+
+- Eventually we can add a game history, with aggregations of scores.
+- Profile with best word ever played etc.. 
+
+-- start with two player version
+//// ****** ///// 
+start the game initial. 
+-
+- Add points to letters.
+- Allow non locking of tiles. 
+- Add dictionary.
+- Add score box. 
+- Expand to multiplayers 
+- Check that moves are valid. 
+- Bring in revert last move button.
+- Then add logins. Add security. Deploy to some cloud 
+- we have an issue that when we get a list assignment out of range. 
+- If we remove from the start of the list and then remove from the end. The list will have shortened
+and we haven't catered to the fact that the ID's no longer match. (Well done, this error has been cracked)
+
+
+
+X -- Add in a wordfinder function 
+X -- to get the game playable. Fix the out of index issue when placing a tile. 
+X-- Add in a hide/unhide tile button 
+X Add points to tiles. 
+X need to make the whole tile grabbable
+
+-- Add bonus points to boards: Need to calculate a formula, for all the double words etc. then we can have a lookup dictionary and put the class of the tile in jinja templace
+-- we should then use javascript ?? no just jinja to fill in the tile. 
+
+-- Add ability to add on 
+
+-- add the replace words function
+ 
+Issues:
+The show hide setting doesn't persist with the refresh. THis state could be saved.?
+We can't click on the form texzt to fill it in, we have to click on the label??
+blank tiles aren't grabbable
+
+
+bonus points:
+center [7,7]
+triple word = [0,0] [0,7] [0,14]
+              [7,0] [7,14]
+              [14,0] [14,7] [14,14]
+double word = [1,1] [1,13]
+              [2,2] [2,12]
+              [3,3] [3,11]
+              [4,4] [4,10]
+              [10,4] [10,10]
+              [11,3] [11,11]
+              [12,2] [12,12]
+              [13,1] [13,13]
+double letter = [0,3] [0,11]
+                [2,6] [2,8]
+                [3,0] [3,7] [3,14]
+                [6,2] [6,6] [6,8] [6,12]
+                [7,3] [7,11]
+                [8, 2] [8, 6] [8, 8] [8, 12]
+                [11,1] [11,7] [11,14]
+                [12,6] [12,8]
+                [14,3] [14,11]
+
+triple letter = [1, 5] [1,9]
+              = [5,1] [5,5] [5,9] [5,13]
+              = [9,1] [9,5] [9,9] [9,13]
+              = [13,5] [13,9]

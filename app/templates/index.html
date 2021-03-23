@@ -1,0 +1,259 @@
+<html>
+    <head>
+        <title>Lord of the Words</title>
+    </head>
+    <style>
+
+        html, body {margin: 0; height: 100%; overflow: hidden}
+        .board {
+            
+    
+            background: #0B6623;
+            border-radius: 2px;
+            border-spacing: 2px;
+     
+        }
+        .boardsquare {
+            background:#9DC183;
+            border-radius: 3px;
+            height: 39px;
+            width: 39px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+
+        }
+        .tile {
+           
+            border-radius: 3px;
+            position: absolute;
+            height: 39px;
+            width: 39px;
+            background: #F5F5DC;
+          
+        }
+
+        .placedtile {
+           
+           border-radius: 3px;
+           height: 39px;
+           width: 39px;
+           background: #F5F5DC;
+           
+         
+       }
+
+
+
+        .tileletter {
+            
+            
+        
+            text-align: center;
+      
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 20px;
+        }
+
+        .placedtileletter {
+            
+            margin: 0px auto 0px auto;
+        
+            text-align: center;
+            padding-bottom: 1px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 20px;
+        }
+
+        #topspacer {
+            height: 100px;
+            width: 400px;
+            border-radius: 15px;
+            background: #F5F5DC;
+            margin-bottom: 20px;
+            margin-right: 20px;
+            font-size: 9px;
+          
+
+        }
+        .tilepoint
+            {
+                font-size:12px;
+                padding: 4px;
+                text-align: right;
+                position: relative;
+                top: -7px;
+        }
+
+        .rack {
+            width: 290px;
+            height: 45px;
+            background: #9DC183;
+            position: absolute;
+            left: 750px;
+            border-color: #0B6623; 
+            border-radius: 5px;
+
+        }
+        #rack1 {
+            top: 100px;
+        }
+        #rack2 {
+            top: 200px;
+        }
+
+        .rackcover {
+            width: 290px;
+            height: 45px;
+            background: #9DC183;
+            position: absolute;
+            left: 750px;
+            border-color: #0B6623; 
+            border-radius: 5px;
+
+        }
+        #rackcover1 {
+            top: 100px;
+        }
+        #rackcover2 {
+            top: 200px;
+        }
+
+        .replacetiles {
+            width: 110px;
+            height: 40px;
+            background: cornsilk;
+            position: absolute;
+            font-family: Arial, Helvetica, sans-serif;
+            left: 750px;
+            border-color: #0B6623; 
+            border-radius: 20px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 15px;
+            color: black;
+
+        }
+        #replace1 {
+            top: 150px
+        }
+        #replace2 {
+            top: 250px
+        }
+        .TW {
+            background-color: #46B1C9;
+        }
+        .DW {
+            background-color: #3454D1;
+        }
+        .DL {
+            background-color: #8B1E3F;
+        }
+        .TL {
+            background-color: #3B413C;
+        }
+        .★ {
+            background-color: #46B1C9;
+        }
+        .showhide {
+            width: 110px;
+            height: 40px;
+            background: cornsilk;
+            position: absolute;
+            font-family: Arial, Helvetica, sans-serif;
+            left: 1050px;
+            border-color: #0B6623; 
+            border-radius: 20px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 15px;
+            color: black;
+
+        }
+        #showhide1 {
+            top: 100px
+        }
+        #showhide2 {
+            top: 200px
+        }
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+    <body>
+
+
+     <a href="{{ url_for('reset') }}">RESET</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>{{ game.tiles_left }} letters left</a>
+        <div id="mydiv" style="padding: 25px; height: 2000px; width: 2000px; background: gainsboro;">
+          <div id="rack1" class="rack"></div>
+          
+               {% for i in range(7) %}
+               {% if game.rack1[i] %}
+              
+                <div id="tomove" class="tomove tile" style="top: 100px; left: {{750 + i*41}}px;" >
+                    <div  id="tilecontain1{{i}}"  class="tilecontainer" style="font-size:3px">&nbsp;
+                    <div class="tileletter" id="rack:1 letter:{{i}}">{{ game.rack1[i] }}</div>
+                    {% if letter_points_lookup[game.rack1[i]]!= 0 %} <div class="tilepoint">{{ letter_points_lookup[game.rack1[i]] }}</div> {% endif %}
+                </div>
+                
+                </div>
+                    
+               {% endif %}
+                {% endfor %}
+            <div id="rackcover1" class="rackcover"></div>
+          <div id="rack2" class="rack"></div>
+          
+                {% for i in range(7) %}{% if game.rack2[i] %}
+                <div id="tomove" class="tomove tile" style="top: 200px; left: {{750 + i*41}}px; ">
+                     <div id="tilecontain2{{i}}" class="tilecontainer" style="font-size:3px">&nbsp;
+                    <div class="tileletter" id="rack:2 letter:{{i}}">{{ game.rack2[i] }}</div>
+                    <div class="tilepoint">{% if letter_points_lookup[game.rack2[i]]!= 0 %}{{ letter_points_lookup[game.rack2[i]] }}{% endif %}</div>
+                </div>
+
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div id="rackcover2" class="rackcover"></div>
+                <span id="showhide1" class="showhide" >Show Rack</span><a href="/replace?rack=1"><span id="replace1" class="replacetiles" >Replace Tiles</span></a>
+                <span id="showhide2" class="showhide" >Show Rack</span><a href="/replace?rack=2"><span id="replace2" class="replacetiles"> Replace Tiles</span></a>
+          
+       
+
+       
+            
+       <table class="board">
+           {% for i in range(15) %}
+          <tr>
+              {% for j in range(15) %}
+              {% if game.board.tiles[i][j].value == None %}
+            <td id="square[{{i}}][{{j}}]" class="droppable boardsquare {% if bonus_lookup[i|string + '-' + j|string]  %}{{bonus_lookup[i|string + '-' + j|string]}}{% endif %}">{% if bonus_lookup[i|string + '-' + j|string] %} {{bonus_lookup[i|string + '-' + j|string]}}{% endif %}</td>
+              {% else %}
+              <td id="square[{{i}}][{{j}}]" class="boardsquare">
+                  <div id="tomove" class="tomove placedtile" >
+                      <div style="font-size:3px">&nbsp;
+                        <div class="placedtileletter locked">{{ game.board.tiles[i][j].value }}</div>
+                        <div class="tilepoint">{{ letter_points_lookup[game.board.tiles[i][j].value] }}</div>
+                    </div>
+                   </div>
+              </td>
+              {% endif %}
+              {% endfor %}
+        </tr>
+        {% endfor %}
+       </table>
+     <!--  <div id="topspacer"></div> -->
+     <div style="position: absolute; left: 750px; top: 500px; background:cornsilk; border-radius: 20px; font-family: Arial, Helvetica, sans-serif;">
+      <div style="height: 10px;">&nbsp;</div>
+     <form id="checkword" style="padding: 20px;" action="/checkword" method="post">
+
+        <label for="wordtocheck">Check Word:
+        <input type="text" id="wordtocheck" name="wordtocheck" {% if checked_word %} value="{{ checked_word }}"{% endif %}></label><br><br>
+        <input type="submit" id="wordsubmit" value="Check" name="wordsubmit"> 
+     </form>
+     {% if checked_word %}<div style="padding: 10px">{{ checked_word }}{% if IsAWord==True %} is a word! {% else %} is not a word!{% endif %}</div>
+     {% endif %}
+    </div>
+    </body>
+
+</html>
+
+<script   src="{{ url_for('static', filename='scriptv2.js') }}"></script>
